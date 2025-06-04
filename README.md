@@ -171,9 +171,9 @@ const char* mqtt_server = "192.168.15.151"; // IP do PC onde está o Mosquitto
   [ VCC ] [ TRIG ] [ ECHO ] [ GND ]
     ^       ^        ^        ^
     |       |        |        +--> GND do NodeMCU
-    |       |        +-------------| (via divisor 5 V → 3.3 V) → D2 (GPIO4)
+    |       |        +-------------> D2 (GPIO4)
     |       +----------------------> D1 (GPIO5)
-    +-----------------------------> 5 V (VIN do NodeMCU)
+    +-----------------------------> 3V (3v do NodeMCU)
   ```
 
   * **VCC** → **5 V** (VIN do NodeMCU)
