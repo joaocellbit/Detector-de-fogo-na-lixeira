@@ -9,10 +9,12 @@ const binStatusElem  = document.getElementById('binStatus');
 const alertMsgElem   = document.getElementById('alertMsg');
 const recordTempElem = document.getElementById('recordTemp');
 const recordTimeElem = document.getElementById('recordTime');
+// Referência ao elemento de áudio para o alarme
+const audioAlarm     = document.getElementById('audioAlarm');
 
 // ─── Variáveis de recorde ─────────────────────────────────────────────────────────
-let recordTemp  = -Infinity;   // guarda a maior temperatura já vista
-let recordTime  = '--:--:--';  // guarda o horário em que ocorreu
+let recordTemp = -Infinity;
+let recordTime = '--:--:--';
 
 // ─── Dados iniciais para o gráfico de temperatura ─────────────────────────────────
 const tempData   = [];
@@ -120,11 +122,11 @@ client.on('message', (topic, payload) => {
   const message = payload.toString();
 
   if (topic === topicDHT) {
-    // Espera JSON no formato: {"temp":xx.x,"hum":yy.y}
+    // Espera JSON no formato: {"temp": xx.x, "hum": yy.y}
     try {
       const data = JSON.parse(message);
       const temp = parseFloat(data.temp.toFixed(1));
-      const now = new Date();
+      const now  = new Date();
       const timeLabel = now.toLocaleTimeString();
 
       // 1) Atualiza valor de temperatura no DOM
@@ -136,32 +138,53 @@ client.on('message', (topic, payload) => {
       // 3) Verifica recorde
       verificaEAtualizaRecorde(temp, timeLabel);
 
-      // 4) Verifica limiares e exibe alerta
-      if (temp >= 90) {
+      // 4) Verifica limiares e exibe alerta + toca áudio se ≥ 90 °C
+      if (temp >= 90.0) {
         alertMsgElem.textContent = '🔥 ALERTA CRÍTICO: POSSÍVEL INCÊNDIO!';
         alertMsgElem.style.color = 'red';
-      } else if (temp >= 70) {
-        alertMsgElem.textContent = '⚠️ CUIDADO: TEMPERATURA ALTA (≥ 70°C)';
+        // Toca o áudio de alarme (se ainda não estiver tocando)
+        if (audioAlarm.paused) {
+          audioAlarm.currentTime = 0;
+          audioAlarm.play().catch(err => console.error('Falha ao tocar áudio:', err));
+        }
+      }
+      else if (temp >= 70.0) {
+        alertMsgElem.textContent = '⚠️ CUIDADO: TEMPERATURA ALTA (≥ 70 °C)';
         alertMsgElem.style.color = 'orange';
-      } else {
+        // Pausar/parar o áudio, caso estivesse tocando
+        if (!audioAlarm.paused) {
+          audioAlarm.pause();
+          audioAlarm.currentTime = 0;
+        }
+      }
+      else {
         alertMsgElem.textContent = 'Temperatura normal.';
         alertMsgElem.style.color = 'green';
+        // Pausar/parar o áudio caso estivesse tocando
+        if (!audioAlarm.paused) {
+          audioAlarm.pause();
+          audioAlarm.currentTime = 0;
+        }
       }
-    } catch (e) {
+    }
+    catch (e) {
       console.error('Erro ao parsear JSON de temperatura:', e);
     }
 
-  } else if (topic === topicDist) {
-    // Espera string contendo número, e.g., "12.3"
+  } 
+  else if (topic === topicDist) {
+    // Espera string contendo número, ex: "12.3"
     const dist = parseFloat(parseFloat(message).toFixed(1));
-    // Define status da lixeira (fechada <10cm, aberta >30cm, caso intermediário mostra o valor)
+    // Define status da lixeira: <10 cm = fechada, >30 cm = aberta, senão mostra valor
     if (dist < 10) {
       binStatusElem.textContent = 'Fechada';
       binStatusElem.style.color = 'blue';
-    } else if (dist > 30) {
+    }
+    else if (dist > 30) {
       binStatusElem.textContent = 'Aberta';
       binStatusElem.style.color = 'green';
-    } else {
+    }
+    else {
       binStatusElem.textContent = `∼ ${dist} cm`;
       binStatusElem.style.color = 'gray';
     }
