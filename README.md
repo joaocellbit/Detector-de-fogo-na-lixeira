@@ -176,9 +176,9 @@ const char* mqtt_server = "192.168.15.151"; // IP do PC onde está o Mosquitto
     +-----------------------------> 3V (3v do NodeMCU)
   ```
 
-  * **VCC** → **5 V** (VIN do NodeMCU)
+  * **VCC** → **3 V** (3v do NodeMCU)
   * **TRIG** → **D1** (GPIO5)
-  * **ECHO** → **D2** (GPIO4) **através do divisor de tensão** (2 kΩ + 3,3 kΩ)
+  * **ECHO** → **D2** (GPIO4) 
   * **GND** → **GND**
 
 #### Buzzer (ativo)
