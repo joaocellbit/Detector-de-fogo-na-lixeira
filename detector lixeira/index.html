@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detector de Lixeira</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- MQTT.js para navegador -->
+  <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+
+  <!-- Chart.js para gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Monitor de Lixeira</h1>
+  </header>
+  <main>
+    <section id="status">
+      <div class="status-item">
+        <span>Temperatura:</span>
+        <span id="tempValue">-- °C</span>
+      </div>
+      <div class="status-item">
+        <span>Lixeira:</span>
+        <span id="binStatus">--</span>
+      </div>
+    </section>
+
+    <section id="chartSection">
+      <canvas id="tempChart" width="600" height="300"></canvas>
+    </section>
+
+    <!-- NOVA SEÇÃO: Recorde de Temperatura -->
+    <section id="recordSection">
+      <h2>Recorde de Temperatura</h2>
+      <div class="record-item">
+        <span class="label">Máxima Até Agora:</span>
+        <span id="recordTemp">-- °C</span>
+      </div>
+      <div class="record-item">
+        <span class="label">Horário:</span>
+        <span id="recordTime">--:--:--</span>
+      </div>
+    </section>
+
+    <section id="alerts">
+      <p id="alertMsg">Nenhum alerta.</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
