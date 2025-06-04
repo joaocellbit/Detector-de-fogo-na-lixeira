@@ -102,17 +102,17 @@ log_type all
    * Em um terminal, execute:
 
      ```bash
-     mosquitto_sub -h localhost -t "trashbin/#" -v
+      mosquitto_sub -h localhost -t lixeira/# -v
      ```
    * Em outro terminal, publique manualmente:
 
      ```bash
-     mosquitto_pub -h localhost -t "trashbin/temperature" -m "{\"temp\":25.0,\"hum\":60.0}"
+     mosquitto_pub -h localhost -t "lixeira/temperature" -m "{\"temp\":25.0,\"hum\":60.0}"
      ```
    * O terminal do `mosquitto_sub` deverá exibir:
 
      ```
-     trashbin/temperature {"temp":25.0,"hum":60.0}
+     lixeira/temperature {"temp":25.0,"hum":60.0}
      ```
 
 ---
