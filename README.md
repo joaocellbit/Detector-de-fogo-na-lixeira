@@ -9,7 +9,7 @@ Este repositório contém o projeto completo para monitorar temperatura e nível
 /
 ├── README.md                 ← (este arquivo de documentação)
 ├── mosquitto.conf            ← Configuração customizada do broker Mosquitto
-├── sketch\_jun3a.ino          ← Firmware Arduino (ESP8266) para ler sensores e publicar via MQTT
+├── sketch_jun3a.ino          ← Firmware Arduino (ESP8266) para ler sensores e publicar via MQTT
 ├── detector lixeira/         ← Front-end (dashboard web)
 │   ├── index.html            ← Página HTML principal do dashboard
 │   ├── style.css             ← Estilos CSS usados pelo dashboard
