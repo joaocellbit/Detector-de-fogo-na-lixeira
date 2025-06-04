@@ -6,9 +6,6 @@ Este repositório contém o projeto completo para monitorar temperatura e nível
 ---
 
 ## 📂 Estrutura do Repositório
-
-```
-
 /
 ├── README.md                 ← (este arquivo de documentação)
 ├── mosquitto.conf            ← Configuração customizada do broker Mosquitto
@@ -19,6 +16,9 @@ Este repositório contém o projeto completo para monitorar temperatura e nível
 │   ├── app.js                ← Lógica JavaScript (MQTT.js + Chart.js) do dashboard
 │   └── alarm.mp3             ← Áudio de alarme usado quando a temperatura excede 90 °C
 └── (outras pastas/opcionais)  ← Você pode adicionar wiring/ ou refs/ mais tarde, se desejar
+
+```
+
 
 ````
 
