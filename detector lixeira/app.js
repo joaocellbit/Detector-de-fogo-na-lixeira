@@ -148,8 +148,8 @@ client.on('message', (topic, payload) => {
           audioAlarm.play().catch(err => console.error('Falha ao tocar áudio:', err));
         }
       }
-      else if (temp >= 70.0) {
-        alertMsgElem.textContent = '⚠️ CUIDADO: TEMPERATURA ALTA (≥ 70 °C)';
+      else if (temp >= 50.0) {
+        alertMsgElem.textContent = '⚠️ CUIDADO: TEMPERATURA ALTA (≥ 50 °C) RISCO DE DANOS AO DETECTOR';
         alertMsgElem.style.color = 'orange';
         // Pausar/parar o áudio, caso estivesse tocando
         if (!audioAlarm.paused) {
