@@ -139,8 +139,8 @@ client.on('message', (topic, payload) => {
       verificaEAtualizaRecorde(temp, timeLabel);
 
       // 4) Verifica limiares e exibe alerta + toca áudio se ≥ 90 °C
-      if (temp >= 90.0) {
-        alertMsgElem.textContent = '🔥 ALERTA CRÍTICO: POSSÍVEL INCÊNDIO!';
+      if (temp >= 60.0) {
+        alertMsgElem.textContent = '🔥 ALERTA CRÍTICO: POSSÍVEL INCÊNDIO! DETECTOR SATURADO';
         alertMsgElem.style.color = 'red';
         // Toca o áudio de alarme (se ainda não estiver tocando)
         if (audioAlarm.paused) {
