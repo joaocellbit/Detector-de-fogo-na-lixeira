@@ -43,7 +43,6 @@ Detector de Fogo na Lixeira usando ESP8266, DHT11, HC-SR04 e MQTT
 - **ESP8266 (NodeMCU ou similar).**  
 - **Sensor DHT11** (temperatura e umidade).  
 - **Sensor HC-SR04** (ultrassônico para medir distância).  
-- **Buzzer ativo** (5 V ou 3,3 V, dependendo do modelo).  
 - **Jumpers / cabos** e **protoboard**.  
 - **Resistores** para montar o divisor de tensão (2 kΩ e 3,3 kΩ ou valores equivalentes) entre o pino ECHO (5 V) do HC-SR04 e o GPIO do ESP8266 (3,3 V).  
 - **Cabo USB** para alimentar e programar o NodeMCU.  
@@ -181,10 +180,6 @@ const char* mqtt_server = "192.168.15.151"; // IP do PC onde está o Mosquitto
   * **ECHO** → **D2** (GPIO4) 
   * **GND** → **GND**
 
-#### Buzzer (ativo)
-
-* **+** → **D5** (GPIO14)
-* **–** → **GND**
 
 ### 4.4 Fazer Upload
 
@@ -274,7 +269,6 @@ const char* mqtt_server = "192.168.15.151"; // IP do PC onde está o Mosquitto
 
   const int trigPin   = D1; // HC-SR04 TRIG (GPIO5)
   const int echoPin   = D2; // HC-SR04 ECHO (GPIO4, via divisor de tensão)
-  const int buzzerPin = D5; // Buzzer (GPIO14)
   ```
 * **Funções principais:**
 
@@ -289,11 +283,7 @@ const char* mqtt_server = "192.168.15.151"; // IP do PC onde está o Mosquitto
        {"temp": <valor>, "hum": <valor>}
        ```
      * Atualiza variável `recordTemp` e `recordTime` se o novo `temp` for maior.
-     * Lógica de thresholds do buzzer:
 
-       * `temp >= 90 °C` → `digitalWrite(buzzerPin, HIGH);` ashboard emite alerta Vermelho, (alarme contínuo).
-       * `50 °C <= temp < 90 °C` → ashboard emite alerta laranja, (alarme contínuo).
-       * `temp < 50 °C` →  dashboard emite alerta verde.
   4. `publishHC_SR04()`:
 
      * Gera pulso no `trigPin`:
@@ -402,7 +392,7 @@ A seguir, algumas fotos do protótipo para ilustrar a montagem:
 
 ![20250607_183641](https://github.com/user-attachments/assets/96e9ea9e-cead-49c8-ae0e-9a37683d40f9)
 
-* **Protótipo montado no protoboard:** HC-SR04 alimentado em 5 V, divisor de tensão no ECHO → D2, DHT11 em 3.3 V → D4, buzzer em D5.
+* **Protótipo montado no protoboard:** HC-SR04 alimentado em 5 V, divisor de tensão no ECHO → D2, DHT11 em 3.3 V → D4.
 * **NodeMCU em funcionamento:** Cabo USB conectado, LED Wi-Fi aceso, Serial Monitor exibindo leituras periódicas.
 
 *(Substitua os nomes de arquivo acima pelos nomes reais das suas fotos, caso sejam diferentes.)*
@@ -454,7 +444,6 @@ Este projeto é distribuído sob a **Licença MIT**. Sinta-se à vontade para us
 4. **Abra a Arduino IDE** e carregue `sketch_jun3a.ino` no seu ESP8266:
 
    * Configure SSID, senha e `mqtt_server` corretamente.
-   * Confira a pinagem dos sensores e buzzer.
    * Clique em **Upload**.
 5. **Monte o hardware** seguindo o diagrama em “Detalhes das Customizações” (seção 6).
 6. **Abra o browser** e dê um duplo clique em:
