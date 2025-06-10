@@ -52,7 +52,7 @@ Detector de Fogo na Lixeira usando ESP8266, DHT11, HC-SR04 e MQTT
 
 - **Mosquitto Broker** (versão ≥ 2.x recomendado).  
   - Instale via gerenciador de pacotes (Linux/Mac) ou baixando do site oficial (Windows).  
-- **Arduino IDE** (versão ≥ 1.8.5) ou **VSCode + PlatformIO** para compilar e enviar o firmware ao ESP8266.  
+- **Arduino IDE** (versão ≥ 1.8.5) ou **VSCode + PlatformIO** para compilar e enviar o firmware ao ESP8266.
 - **Browser moderno** (Chrome, Firefox, Edge) com suporte a WebSocket e áudio HTML5.  
 - **Git** para clonar este repositório (opcional, mas recomendado).  
 
@@ -124,7 +124,7 @@ log_type all
 1. **Abra o arquivo** `sketch_jun3a.ino` (dentro da raiz do repositório) no Arduino IDE ou no VSCode (com PlatformIO).
 
 2. **Configure a placa**:
-
+   * `File → Preferences → Additional boards manager urls e escreva "http://arduino.esp8266.com/stable/package_esp8266com_index.json" para conseguir ter o board manager da placa `
    * `Ferramentas → Placa → NodeMCU 1.0 (ESP-12E Module)`
    * `Ferramentas → Flash Size → 4M (1M SPIFFS)` (ou similar)
    * `Ferramentas → Upload Speed → 115200`
