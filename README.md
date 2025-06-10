@@ -398,10 +398,9 @@ const char* mqtt_server = "192.168.15.151"; // IP do PC onde está o Mosquitto
 
 A seguir, algumas fotos do protótipo para ilustrar a montagem:
 
-<p align="center">
-  <img src="detector lixeira/prototipo_1.jpg" alt="Protótipo montado no protoboard" width="300"/>
-  <img src="detector lixeira/prototipo_2.jpg" alt="NodeMCU e sensores conectados" width="300"/>
-</p>
+![20250607_183636](https://github.com/user-attachments/assets/5c94a4e0-6687-4254-affd-e5bc7b2e6496)
+
+![20250607_183641](https://github.com/user-attachments/assets/96e9ea9e-cead-49c8-ae0e-9a37683d40f9)
 
 * **Protótipo montado no protoboard:** HC-SR04 alimentado em 5 V, divisor de tensão no ECHO → D2, DHT11 em 3.3 V → D4, buzzer em D5.
 * **NodeMCU em funcionamento:** Cabo USB conectado, LED Wi-Fi aceso, Serial Monitor exibindo leituras periódicas.
