@@ -14,7 +14,7 @@ Este repositório contém o projeto completo para monitorar temperatura e nível
 │   ├── index.html            ← Página HTML principal do dashboard
 │   ├── style.css             ← Estilos CSS usados pelo dashboard
 │   ├── app.js                ← Lógica JavaScript (MQTT.js + Chart.js) do dashboard
-│   └── alarm.mp3             ← Áudio de alarme usado quando a temperatura excede 90 °C
+│   └── alarm.mp3             ← Áudio de alarme usado quando a temperatura excede 50 °C
 └── (outras pastas/opcionais)  ← Você pode adicionar wiring/ ou refs/ mais tarde, se desejar
 
 ```
@@ -32,7 +32,7 @@ Detector de Fogo na Lixeira usando ESP8266, DHT11, HC-SR04 e MQTT
 **Objetivo:**  
 1. Ler a temperatura interna de uma lixeira (com DHT11) e medir a distância até o lixo (com HC-SR04).  
 2. Publicar esses valores a cada 5 segundos em tópicos MQTT (`trashbin/temperature` e `trashbin/distance`).  
-3. Receber esses dados em um dashboard web (via MQTT sobre WebSocket) para exibir gráficos em tempo real, indicar se a lixeira está “aberta” ou “fechada”, mostrar o recorde de temperatura e tocar um alarme no browser se a temperatura atingir ou ultrapassar 90 °C.
+3. Receber esses dados em um dashboard web (via MQTT sobre WebSocket) para exibir gráficos em tempo real, indicar se a lixeira está “aberta” ou “fechada”, mostrar o recorde de temperatura e tocar um alarme no browser se a temperatura atingir ou ultrapassar 60 °C.
 
 ---
 
@@ -229,8 +229,8 @@ const char* mqtt_server = "192.168.15.151"; // IP do PC onde está o Mosquitto
    * **Alertas**:
 
      * **< 50 °C** → “Temperature normal.” (verde)
-     * **≥ 50 °C e < 90 °C** → “⚠️ High Temperature (≥ 50 °C – risk of sensor damage)” (laranja) e o áudio `alarm.mp3` será reproduzido no browser (verifique se seu navegador permite tocar sons automaticamente).
-     * **≥ 90 °C** → “🔥 CRITICAL ALERT: POSSIBLE FIRE!” (vermelho) o audio do alarme tocara novamente se necessario
+     * **≥ 50 °C e < 60 °C** → “⚠️ High Temperature (≥ 50 °C – risk of sensor damage)” (laranja) e o áudio `alarm.mp3` será reproduzido no browser (verifique se seu navegador permite tocar sons automaticamente).
+     * **≥ 60 °C** → “🔥 CRITICAL ALERT: POSSIBLE FIRE!” (vermelho) o audio do alarme tocara novamente se necessario
 
 ---
 
@@ -388,9 +388,9 @@ const char* mqtt_server = "192.168.15.151"; // IP do PC onde está o Mosquitto
 
 A seguir, algumas fotos do protótipo para ilustrar a montagem:
 
-![20250607_183636](https://github.com/user-attachments/assets/5c94a4e0-6687-4254-affd-e5bc7b2e6496)
+![20250907_183636](https://github.com/user-attachments/assets/5c94a4e0-6687-4254-affd-e5bc7b2e6496)
 
-![20250607_183641](https://github.com/user-attachments/assets/96e9ea9e-cead-49c8-ae0e-9a37683d40f9)
+![20250907_183641](https://github.com/user-attachments/assets/96e9ea9e-cead-49c8-ae0e-9a37683d40f9)
 
 * **Protótipo montado no protoboard:** HC-SR04 alimentado em 5 V, divisor de tensão no ECHO → D2, DHT11 em 3.3 V → D4.
 * **NodeMCU em funcionamento:** Cabo USB conectado, LED Wi-Fi aceso, Serial Monitor exibindo leituras periódicas.
@@ -471,6 +471,6 @@ Este projeto é distribuído sob a **Licença MIT**. Sinta-se à vontade para us
 
 
 ![vivaldi_Qu4CPt2w66](https://github.com/user-attachments/assets/d4438e72-80f1-43c1-ba62-02d96c8ae238)
-![vivaldi_v3ZUmGsKAB](https://github.com/user-attachments/assets/a4f12e60-851b-4207-bec6-5b69230159bf)
+![vivaldi_v3ZUmGsKAB](https://github.com/user-attachments/assets/a4f12e90-851b-4207-bec6-5b69230159bf)
 ![vivaldi_izXggpuN2d](https://github.com/user-attachments/assets/b0cefb40-c6be-4873-9d2d-a714fb53a42b)
-![vivaldi_egducYBh5w](https://github.com/user-attachments/assets/3faa53b6-f584-460b-80da-0d4f183a0a63)
+![vivaldi_egducYBh5w](https://github.com/user-attachments/assets/3faa53b6-f584-490b-80da-0d4f183a0a63)
