@@ -152,9 +152,9 @@ client.on('message', (topic, payload) => {
         alertMsgElem.textContent = '⚠️ CUIDADO: TEMPERATURA ALTA (≥ 50 °C) RISCO DE DANOS AO DETECTOR';
         alertMsgElem.style.color = 'orange';
         // Pausar/parar o áudio, caso estivesse tocando
-        if (!audioAlarm.paused) {
-          audioAlarm.pause();
+        if (audioAlarm.paused) {
           audioAlarm.currentTime = 0;
+          audioAlarm.play().catch(err => console.error('Falha ao tocar áudio:', err));
         }
       }
       else {
@@ -176,17 +176,14 @@ client.on('message', (topic, payload) => {
     // Espera string contendo número, ex: "12.3"
     const dist = parseFloat(parseFloat(message).toFixed(1));
     // Define status da lixeira: <10 cm = fechada, >30 cm = aberta, senão mostra valor
-    if (dist < 10) {
+    if (dist <= 10) {
       binStatusElem.textContent = 'Fechada';
       binStatusElem.style.color = 'blue';
     }
-    else if (dist > 30) {
+    else {
       binStatusElem.textContent = 'Aberta';
       binStatusElem.style.color = 'green';
     }
-    else {
-      binStatusElem.textContent = `∼ ${dist} cm`;
-      binStatusElem.style.color = 'gray';
-    }
+
   }
 });
