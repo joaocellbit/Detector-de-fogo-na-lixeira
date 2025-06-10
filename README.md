@@ -227,15 +227,15 @@ const char* mqtt_server = "192.168.15.151"; // IP do PC onde está o Mosquitto
    * **Temperatura (°C)**: gráfico de linha mostrando os últimos 20 valores.
    * **Status da Lixeira**:
 
-     * `< 10 cm` → “Closed” (azul)
-     * `> 30 cm` → “Open” (verde)
-     * Entre 10 e 30 cm → exibe “\~ XX.X cm” (cinza)
+     * `<= 10 cm` → “Closed” (azul)
+     * `> 10 cm` → “Open” (verde)
+    
    * **Temperatura Recorde**: exibe o maior valor recebido e o horário correspondente.
    * **Alertas**:
 
      * **< 50 °C** → “Temperature normal.” (verde)
-     * **≥ 50 °C e < 90 °C** → “⚠️ High Temperature (≥ 50 °C – risk of sensor damage)” (laranja)
-     * **≥ 90 °C** → “🔥 CRITICAL ALERT: POSSIBLE FIRE!” (vermelho) e o áudio `alarm.mp3` será reproduzido no browser (verifique se seu navegador permite tocar sons automaticamente).
+     * **≥ 50 °C e < 90 °C** → “⚠️ High Temperature (≥ 50 °C – risk of sensor damage)” (laranja) e o áudio `alarm.mp3` será reproduzido no browser (verifique se seu navegador permite tocar sons automaticamente).
+     * **≥ 90 °C** → “🔥 CRITICAL ALERT: POSSIBLE FIRE!” (vermelho) o audio do alarme tocara novamente se necessario
 
 ---
 
@@ -291,9 +291,9 @@ const char* mqtt_server = "192.168.15.151"; // IP do PC onde está o Mosquitto
      * Atualiza variável `recordTemp` e `recordTime` se o novo `temp` for maior.
      * Lógica de thresholds do buzzer:
 
-       * `temp >= 90 °C` → `digitalWrite(buzzerPin, HIGH);` (alarme contínuo).
-       * `50 °C <= temp < 90 °C` → buzzer OFF, mas dashboard emite alerta laranja.
-       * `temp < 50 °C` → buzzer OFF, dashboard emite alerta verde.
+       * `temp >= 90 °C` → `digitalWrite(buzzerPin, HIGH);` ashboard emite alerta Vermelho, (alarme contínuo).
+       * `50 °C <= temp < 90 °C` → ashboard emite alerta laranja, (alarme contínuo).
+       * `temp < 50 °C` →  dashboard emite alerta verde.
   4. `publishHC_SR04()`:
 
      * Gera pulso no `trigPin`:
@@ -394,34 +394,7 @@ const char* mqtt_server = "192.168.15.151"; // IP do PC onde está o Mosquitto
 
 ---
 
-## 📊 7. Avaliação Quantitativa
-
-### 7.1 Tabela I
-
-A Tabela I está descrita no artigo em PDF (SBrT) e resume o desempenho dos sensores:
-
-| Test Scenario               | Nominal Value | Measured Value          | Error / Notes                        |
-| --------------------------- | ------------- | ----------------------- | ------------------------------------ |
-| **DHT11 Temperature Tests** |               |                         |                                      |
-| Ambient (nominal 24 °C)     | 24.0 °C       | 23.8 °C                 | –0.2 °C                              |
-| Rapid heat to 40 °C         | 40.0 °C       | 40.2 °C (after ≈ 60 s)  | ±0.2 °C; ≈ 60 s latency              |
-| Rapid heat to 70 °C         | 70.0 °C       | 69.5 °C (after ≈ 150 s) | ±0.5 °C; ≈ 150 s latency             |
-| Saturation point            | > 50 °C       | 50–55 °C (unstable)     | Sensor saturates; unreliable > 50 °C |
-| **HC-SR04 Distance Tests**  |               |                         |                                      |
-| 10 cm (flat paper stack)    | 10.0 cm       | 9.8 ± 0.2 cm            | 2 % error                            |
-| 30 cm (flat paper stack)    | 30.0 cm       | 29.2 ± 0.8 cm           | 2.7 % error                          |
-| 60 cm (flat paper stack)    | 60.0 cm       | 58.5 ± 1.5 cm           | 2.5 % error                          |
-| 90 cm (flat paper stack)    | 90.0 cm       | 84.7 ± 5.2 cm           | 5.8 % error                          |
-| Soft / irregular trash      | Variado       | No echo / random        | 10 % readings invalid                |
-| Single box at 150 cm        | 150.0 cm      | 147.2 ± 3.1 cm          | 1.9 % error                          |
-
-### 7.2 Gráfico “Nominal vs. Medido”
-
-No artigo SBrT foi incluído um gráfico em PGFPlots comparando cada par de valores originais e medidos, com barras de erro. Caso queira visualizar rapidamente, abra o PDF do artigo ou gere o gráfico localmente em LaTeX.
-
----
-
-## 📷 8. Demonstração / Fotos do Protótipo
+## 📷 7. Demonstração / Fotos do Protótipo
 
 A seguir, algumas fotos do protótipo para ilustrar a montagem:
 
@@ -437,7 +410,7 @@ A seguir, algumas fotos do protótipo para ilustrar a montagem:
 
 ---
 
-## 📝 9. Licença e Créditos
+## 📝 8. Licença e Créditos
 
 Este projeto é distribuído sob a **Licença MIT**. Sinta-se à vontade para usar, modificar e compartilhar, contanto que mantenha este cabeçalho.
 
@@ -500,12 +473,16 @@ Este projeto é distribuído sob a **Licença MIT**. Sinta-se à vontade para us
    mosquitto_pub -h localhost -t "trashbin/temperature" -m "{\"temp\":85.0,\"hum\":50.0}"
    ```
 
-   * O dashboard deverá atualizar imediatamente (alerta laranja em ≥ 50 °C).
+   * O dashboard deverá atualizar imediatamente (alerta laranja em ≥ 50 °C) e o áudio de alarme vai tocar.
    * Se você disparar `"temp":95.0`, o alerta ficará vermelho e o áudio de alarme vai tocar.
 
 
 
 ---
 
-![image](https://github.com/user-attachments/assets/498a3ef9-92e7-4acb-a45f-814623436692)
 
+
+![vivaldi_Qu4CPt2w66](https://github.com/user-attachments/assets/d4438e72-80f1-43c1-ba62-02d96c8ae238)
+![vivaldi_v3ZUmGsKAB](https://github.com/user-attachments/assets/a4f12e60-851b-4207-bec6-5b69230159bf)
+![vivaldi_izXggpuN2d](https://github.com/user-attachments/assets/b0cefb40-c6be-4873-9d2d-a714fb53a42b)
+![vivaldi_egducYBh5w](https://github.com/user-attachments/assets/3faa53b6-f584-460b-80da-0d4f183a0a63)
